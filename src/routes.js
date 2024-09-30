@@ -9,4 +9,5 @@ Routes.get('/', index);
 
 // rotas de login
 
-Routes.get('/login', login.index)
+Routes.get('/login', login.index);
+Routes.post("/login/register", login.register)

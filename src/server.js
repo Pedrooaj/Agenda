@@ -7,7 +7,7 @@ import MongoStore from "connect-mongo";
 import flash from "connect-flash";
 import helmet from "helmet";
 import csurf from "csurf";
-import { checkCsrfError, generateCsrfToken } from "./middlewares/middleware.js";
+import { checkCsrfError, generateCsrfToken, middleWareGlobal } from "./middlewares/middleware.js";
 
 
 // Configuração do dotenv
@@ -57,6 +57,7 @@ app.use(csurf()); // Middleware CSRF
 app.use(helmet()); // Middleware de segurança
 app.use(generateCsrfToken);
 app.use(checkCsrfError);
+app.use(middleWareGlobal);
 app.use(Routes); 
 
 
