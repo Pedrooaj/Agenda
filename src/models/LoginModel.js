@@ -33,29 +33,44 @@ class LoginMod {
 
     async userExists() {
         // procura o item no DB
-        const user = await loginModel.findOne({
+        this.user = await loginModel.findOne({
             email: this.body.email
         });
         // Aplica o erro no array de erros...
-        if (user) this.erros.push("Usuario Já existe!");
+        if (this.user) this.erros.push("Usuario Já existe!");
+    }
+
+    async login() {
+        // Verifica se há erros
+        if (this.erros.length > 0) return;
+        // Busca no DB o usuario
+        this.user = await loginModel.findOne({ email: this.body.email });
+
+        if (!this.user) {
+            this.erros.push('Usuário não existe.');
+            return;
+        }
+        // faz a comparação de hash
+        if (!bcryptjs.compareSync(this.body.password, this.user.password)) {
+            this.erros.push('Senha inválida!');
+            this.user = null;
+            return;
+        }
     }
 
 
 
     async register() {
         await this.validar();
-        
+
         if (this.erros.length > 0) return;
-        
+
         // cria um hash para a senha    
         const salt = bcryptjs.genSaltSync();
         this.body.password = bcryptjs.hashSync(this.body.password, salt);
+        // Cria o usuario no DB
+        this.user = await loginModel.create(this.body);
 
-        try {
-            this.user = await loginModel.create(this.body);
-        } catch (erro) {
-            console.log(erro);
-        }
     }
 
     cleanUp() {

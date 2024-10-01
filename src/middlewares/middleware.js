@@ -1,6 +1,7 @@
 export const checkCsrfError = (err, req, res, next) => {
     if (err) {
-        res.render('404')
+        console.log(err);
+        return res.render('404')
     }
     next();
 }
@@ -8,6 +9,8 @@ export const checkCsrfError = (err, req, res, next) => {
 export const middleWareGlobal = (req, res, next) => {
     res.locals.erros = req.flash("erros");
     res.locals.success = req.flash("success");
+    res.locals.user = req.session.user;
+    
     next();
 }
 
