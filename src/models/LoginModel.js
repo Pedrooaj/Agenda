@@ -33,9 +33,7 @@ class LoginMod {
 
     async userExists() {
         // procura o item no DB
-        this.user = await loginModel.findOne({
-            email: this.body.email
-        });
+        this.user = await loginModel.findOne({ email: this.body.email });
         // Aplica o erro no array de erros...
         if (this.user) this.erros.push("Usuario Já existe!");
     }
