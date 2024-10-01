@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import validator from "validator";
+import bcryptjs from "bcryptjs";
 
 const LoginSchema = new mongoose.Schema({
     email: { type: String, required: true },
@@ -15,25 +16,44 @@ class LoginMod {
         this.user = null;
     }
     // Função para validar
-    validar() {
+    async validar() {
         this.cleanUp();
         // Verifica email
-        if(!validator.isEmail(this.body.email)){
+        if (!validator.isEmail(this.body.email)) {
             this.erros.push("Email invalido")
         }
-
-        if(this.body.password.length < 3 || this.body.password.length >= 50){
+        // Verifica senha
+        if (this.body.password.length < 3 || this.body.password.length >= 50) {
             this.erros.push("A senha precisa ter entre 3 e 50 caracteres.");
         }
-        
+        // Executa uma função que procura se o usuario ja existe no DB
+        await this.userExists();
+
     }
 
+    async userExists() {
+        // procura o item no DB
+        const user = await loginModel.findOne({
+            email: this.body.email
+        });
+        // Aplica o erro no array de erros...
+        if (user) this.erros.push("Usuario Já existe!");
+    }
+
+
+
     async register() {
-        this.validar();
-        if(this.erros.length > 0) return;
-        try{
+        await this.validar();
+        
+        if (this.erros.length > 0) return;
+        
+        // cria um hash para a senha    
+        const salt = bcryptjs.genSaltSync();
+        this.body.password = bcryptjs.hashSync(this.body.password, salt);
+
+        try {
             this.user = await loginModel.create(this.body);
-        }catch(erro){
+        } catch (erro) {
             console.log(erro);
         }
     }
