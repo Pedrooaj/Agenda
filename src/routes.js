@@ -7,8 +7,12 @@ export const Routes = Router();
 
 Routes.get('/', index);
 
-// rotas de login
-
+// Rotas de Login
 Routes.get('/login', login.index);
 Routes.post('/login/login', login.login)
 Routes.post("/login/register", login.register);
+Routes.get("/login/logout", login.logout);
+
+
+// Rotas de Contatos
+
