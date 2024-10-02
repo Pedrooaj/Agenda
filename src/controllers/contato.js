@@ -29,7 +29,7 @@ export const contato = {
             return res.render('404')
         }
     },
-    edit: async function(req, res) {
+    editIndex: async function(req, res) {
         if(!req.params.id){
             return res.render('404');   
         } 
@@ -41,5 +41,33 @@ export const contato = {
         res.render('contato', {
             contato: user
         })
+    },
+    
+    edit: async function(req,res){
+        try {
+            if(!req.params.id){
+                return res.render('404');   
+            } 
+            // Fazendo instancia de um model de contato
+            const contato = new ContatoMod(req.body);
+            // Editando usuario
+            await contato.editar(req.params.id);
+    
+            // Atualizar e envia uma mensagem flash
+            if(contato.erros.length > 0){
+                req.flash('erros', contato.erros);
+                req.session.save(() => res.redirect('/contato'));
+                return;
+            }
+            req.flash('success', 'Contato editado com sucesso');
+            req.session.save(() => res.redirect(`/contato/${contato.user._id}`));
+            return;
+            
+        } catch (error) {
+            console.log(error);
+            res.render('404')
+        }
+
+        
     }
 }

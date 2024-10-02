@@ -18,17 +18,43 @@ class ContatoMod {
         this.user = null;
     }
 
-     async registrar(){
-        this.validar();
-        if(this.erros.length > 0) return;
-        this.user = await ContatoModel.create(this.body);
-     }
+    // Limpa as chaves do body caso não seja string
+    cleanUp() {
+        for (const key in this.body) {
+            typeof this.body[key] !== 'string' ? this.body[key] = "" : this.body[key];
+        }
+        this.body = {
+            nome: this.body.nome,
+            sobrenome: this.body.sobrenome,
+            email: this.body.email,
+            telefone: this.body.telefone
+        };
 
-     async buscarId(id){
-        if(typeof id != 'string') return;
-        const user = await ContatoModel.findById(id);
-        return user;
-     }
+    }
+
+
+
+
+
+
+
+    // Método para criar contato
+    async registrar() {
+        this.validar();
+        if (this.erros.length > 0) return;
+        this.user = await ContatoModel.create(this.body);
+    }
+
+
+
+
+    // Método para editar contato
+    async editar(id) {
+        if (typeof id !== 'string') return;
+        this.validar();
+        if (this.erros.length > 0) return;
+        this.user = await ContatoModel.findByIdAndUpdate(id, this.body, { new: true });
+    }
 
     // Função para validar
     async validar() {
@@ -38,29 +64,31 @@ class ContatoMod {
             this.erros.push("Email invalido");
         }
         if (!this.body.nome) {
-            this.erros.push("Nome é um campo obrigatorio");
+            this.erros.push("Nome é um campo obrigatorio!");
         }
-        if (!this.body.telefone || !this.body.email) {
+        if (!this.body.telefone && !this.body.email) {
             this.erros.push("Pelo Menos um contato precisa ser enviado: E-Mail ou Telefone");
         }
 
-
-
     }
-    cleanUp() {
-        for (const key in this.body) {
-            typeof this.body[key] !== 'string' ? this.body[key] = "" : this.body[key];
-        }
-    
-    
 
-        this.body = {
-            nome: this.body.nome,
-            sobrenome: this.body.sobrenome,
-            email: this.body.email,
-            telefone: this.body.telefone
-        };
+    // Métodos que serão acessados pela classe via classe.prototype.fn
 
+    // Método para buscar id
+    
+    async buscarId(id) {
+        if (typeof id != 'string') return;
+        const user = await ContatoModel.findById(id);
+        return user;
+    }
+
+    // Método para buscar contato
+
+    async buscarContato() {
+        const users = await ContatoModel.find().sort({
+            criadoEm: -1
+        });
+        return users;
     }
 }
 

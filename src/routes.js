@@ -19,5 +19,6 @@ Routes.get("/login/logout", login.logout);
 // Rotas de Contatos
 Routes.get('/contato', loginRequired, contato.index);
 Routes.post('/contato/register', contato.register);
-Routes.get('/contato/:id', contato.edit);
+Routes.get('/contato/:id', contato.editIndex);
+Routes.post('/contato/edit/:id', contato.edit);
 
