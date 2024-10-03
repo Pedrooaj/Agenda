@@ -33,11 +33,6 @@ class ContatoMod {
     }
 
 
-
-
-
-
-
     // Método para criar contato
     async registrar() {
         this.validar();
@@ -89,6 +84,14 @@ class ContatoMod {
             criadoEm: -1
         });
         return users;
+    }
+
+    async deletar(id){
+        if(typeof id != 'string') return;
+
+        const contato = await ContatoModel.findOneAndDelete({_id: id});
+        
+        return contato;
     }
 }
 

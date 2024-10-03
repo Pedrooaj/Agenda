@@ -3,9 +3,9 @@ import LoginMod from "../models/LoginModel.js";
 const login = {
   index: function (req, res) {
     if (req.session.user) {
-      return res.render("logado")
+      return res.render("logado"); // Renderiza a pagina de logado
     }
-    return res.render('login')
+    return res.render('login'); // Renderiza a pagina de login/registro
   },
   register: async function (req, res) {
     try {
@@ -15,12 +15,12 @@ const login = {
 
       // if para exibir erros com flash
       if (Login.erros.length > 0) {
-        req.flash("erros", Login.erros);
-        req.session.save(() => res.redirect('/login')); // Função responsavel há redirecionar rotas
+        req.flash("erros", Login.erros); // Exibe erros do array de erros do model login
+        req.session.save(() => res.redirect('/login')); // Função responsavel há redirecionar rotas e salvar session
         return;
       }
       // Efetua com sucesso a criação da conta e redireciona para pagina de login
-      req.flash("success", "Registro efetuado com Sucesso");
+      req.flash("success", "Registro efetuado com Sucesso"); 
       req.session.save(() => res.redirect("/login"));
 
     } catch (erro) {
@@ -45,12 +45,12 @@ const login = {
       req.session.save(() => res.redirect("/login")); // Redireciona para o index 
     } catch (e) {
       console.log(e);
-      return res.render('404');
+      return res.render('404'); // renderiza a pagina 404
     }
   },
   logout: function (req, res) {
-    req.session.destroy();
-    res.redirect("/login")
+    req.session.destroy(); // Serve para destruir a session encerrar/logout
+    res.redirect("/login") // redireciona para rota login
   }
 
 }
