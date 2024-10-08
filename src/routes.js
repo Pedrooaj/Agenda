@@ -6,7 +6,7 @@ import { loginRequired } from "./middlewares/middleware.js"; //Middleware para r
 
 export const Routes = Router();
 
-Routes.get('/', index);
+Routes.get('/', loginRequired, index);
 
 // Rotas de Login
 Routes.get('/login', login.index);
