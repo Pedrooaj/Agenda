@@ -41,6 +41,10 @@ Neste projeto foram utilizadas as seguintes Tecnologias:
 - **loginRequired** - Responsavel por gerir fluxo de login na aplicação e bloquear acessos não autorizados.
 
 
+## Models
+- **LoginModel** e o model referente ao usuario do sistema, que gerencia toda agenda ou seja ele tem funções como login,logout e registro.
+- **ContatoModel** e o model referente ao contato do sistema, nele há informações como Nome,Email e telefone.
+
 ## Variáveis de Ambiente
 
 Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de ambiente no seu .env
