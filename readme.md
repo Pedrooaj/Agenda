@@ -5,9 +5,13 @@ Alem disto eu fiz o projeto com intuito de exercer minhas habilidades em back-en
 
 
 
-## Tecnologias
+## Conceitos e Tecnologias utilizadas
 
 Neste projeto foram utilizadas as seguintes Tecnologias:
+
+- **Orientação a Objetos** utilizamos o conceito de programação orientada a objetos para deixarmos o código mais organizado e de mais facil manutenção.
+
+- **MVC** e um padrão de sofware da decada de 70, com sua facil escalabilidade com Models, View e Controllers. Este modelo se torna muito robusto junto a programação orientada a objetos
 
 - **ExpressJS** e uma biblioteca utilizada para criação de Api's REST em nodeJS. Com um sistema de rotas bem simples alem de ser relativamente facil de fazer integrações.
 - **Express-Session** e uma biblioteca utilizada para criar sessoes no lado do servidor deixando sua apliação muito segura porem ele tem alto consumo de memoria em grandes aplicações caso não seja utilizado biblioteca de terceiros que armazenam suas sessoes no Banco de dados.
@@ -23,6 +27,18 @@ Neste projeto foram utilizadas as seguintes Tecnologias:
 - **Dotenv** e utilizado para salvar variaveis de ambientes e proteger as infomações de conexão do banco de dados.
 
 
+## Rotas
+- **/** - rota index ou também conhecida como home e a rota principal do projeto onde ela ira exibir a lista de contatos existente na aplicação.
+- **/login** - a rota onde efetuamos login e registro de usuários para efetuarmos a adição de contatos. Nela temos POST e GET para registro login e logout.
+- **/contato** - nesta rota nois temos diversas funcionalidades como adição de contatos e exclusão de tais.
+
+
+## Middlewares
+- **checkCsrfError** - Middleware para tratar erros csrf de formularios não autorizados pela aplicação.
+- **middleWareGlobal** - E o principal middleware da aplicação pois nele utilizamos o connect flash para enviarmos mensagens rápidas e de forma que todas rotas tenham acesso.
+- **generateCsrfToken** - Middleware responsavel por gerar tokens csrf para aplicação.
+
+- **loginRequired** - Responsavel por gerir fluxo de login na aplicação e bloquear acessos não autorizados.
 
 
 ## Variáveis de Ambiente
@@ -70,4 +86,3 @@ Inicie o servidor
 ## Autores
 
 - [@pedrooaj](https://www.github.com/pedrooaj)
-
