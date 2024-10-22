@@ -82,7 +82,7 @@ Inicie o servidor
 
 ## Stack utilizada
 
-**Front-end:** Webpack,EJS e Webpack. 
+**Front-end:** EJS,Webpack e Bootstrap. 
 
 **Back-end:** NodeJS, Express e MongoDB.
 
